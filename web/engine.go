@@ -3,7 +3,6 @@ package web
 import (
 	"github.com/gin-gonic/gin"
 	"gitlab.gf.com.cn/hk-common/go-boot/middleware"
-	"gitlab.gf.com.cn/hk-common/go-boot/web/ctx"
 	"net/http"
 )
 
@@ -18,15 +17,13 @@ type Engine struct {
 
 type Option func(ops *Options)
 
-type handleFunc func(c *ctx.Context)
-
-func (service *Engine) handle(httpMethod string, checkLogin bool, relativePath string, handlers ...handleFunc) {
+func (service *Engine) handle(httpMethod string, checkLogin bool, relativePath string, handlers ...HandleFunc) {
 	arr := make([]gin.HandlerFunc, 0)
 	if checkLogin {
-		arr = append(arr, ctx.Handle(middleware.MCheckLogin(application.serverKey, application.loginAPIPublic, application.userAPI)))
+		arr = append(arr, middleware.MCheckLogin(application.serverKey, application.loginAPIPublic, application.userAPI))
 	}
 	for _, handler := range handlers {
-		arr = append(arr, ctx.Handle(handler))
+		arr = append(arr, Handle(handler))
 	}
 	service.Handle(httpMethod, relativePath, arr...)
 }
@@ -42,18 +39,18 @@ func (service *Engine) Use(middleware ...gin.HandlerFunc) *Engine {
 	return service
 }
 
-func (service *Engine) POST(relativePath string, checkLogin bool, handlers ...handleFunc) {
+func (service *Engine) POST(relativePath string, checkLogin bool, handlers ...HandleFunc) {
 	service.handle(http.MethodPost, checkLogin, relativePath, handlers...)
 }
 
-func (service *Engine) GET(relativePath string, checkLogin bool, handlers ...handleFunc) {
+func (service *Engine) GET(relativePath string, checkLogin bool, handlers ...HandleFunc) {
 	service.handle(http.MethodGet, checkLogin, relativePath, handlers...)
 }
 
-func (service *Engine) PUT(relativePath string, checkLogin bool, handlers ...handleFunc) {
+func (service *Engine) PUT(relativePath string, checkLogin bool, handlers ...HandleFunc) {
 	service.handle(http.MethodPut, checkLogin, relativePath, handlers...)
 }
 
-func (service *Engine) DELETE(relativePath string, checkLogin bool, handlers ...handleFunc) {
+func (service *Engine) DELETE(relativePath string, checkLogin bool, handlers ...HandleFunc) {
 	service.handle(http.MethodDelete, checkLogin, relativePath, handlers...)
 }

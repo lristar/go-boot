@@ -1,6 +1,8 @@
 package web
 
 import (
+	ut "github.com/go-playground/universal-translator"
+	"github.com/go-playground/validator/v10"
 	"gitlab.gf.com.cn/hk-common/go-boot/jaeger"
 	"gitlab.gf.com.cn/hk-common/go-boot/sentry"
 	"io"
@@ -11,10 +13,13 @@ type Options struct {
 	//Auth   auth.Auth
 	//Broker broker.Broker
 	// Before and After funcs
-	BeforeStart []func() error
-	BeforeStop  []func() error
-	AfterStart  []func() error
-	AfterStop   []func() error
+	beforeStart []func() error
+	beforeStop  []func() error
+	afterStart  []func() error
+	afterStop   []func() error
+	//  校验器
+	vl  *validator.Validate
+	tra ut.Translator
 
 	// Other options for implementations of the interface
 	// can be stored in a context

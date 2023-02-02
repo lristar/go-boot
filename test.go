@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"gitlab.gf.com.cn/hk-common/go-boot/web"
-	"gitlab.gf.com.cn/hk-common/go-boot/web/ctx"
 )
 
 type Test struct {
@@ -16,7 +15,7 @@ func (t Test) RegRouter(engine *web.Engine) {
 		context.Next()
 		fmt.Println("after")
 	})
-	g.GET("/", true, func(c *ctx.Context) {
+	g.GET("/", true, func(c *web.Context) {
 		c.JsonOK("ok")
 	})
 }

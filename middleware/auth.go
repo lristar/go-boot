@@ -1,15 +1,15 @@
 package middleware
 
 import (
-	"errors"
+	"github.com/gin-gonic/gin"
+	"gitlab.gf.com.cn/hk-common/go-boot/dto/base"
 	"gitlab.gf.com.cn/hk-common/go-boot/isp"
-	"gitlab.gf.com.cn/hk-common/go-boot/web/ctx"
 	"net/http"
 )
 
 // MCheckLogin 返回登录中间件
-func MCheckLogin(serverKey, loginAPIPublic, userAPI string) func(ctx *ctx.Context) {
-	return func(c *ctx.Context) {
+func MCheckLogin(serverKey, loginAPIPublic, userAPI string) func(ctx *gin.Context) {
+	return func(c *gin.Context) {
 		tokenC, _ := c.Request.Cookie("access_token")
 		token := ""
 		if tokenC != nil {
@@ -19,7 +19,12 @@ func MCheckLogin(serverKey, loginAPIPublic, userAPI string) func(ctx *ctx.Contex
 		}
 		if token == "" {
 			c.Abort()
-			c.JsonErrorWithStatusCode(http.StatusUnauthorized, errors.New("未登录"))
+			r := base.Result{
+				ErrCode: 0,
+				ErrMsg:  "",
+				Data:    "请登录！",
+			}
+			c.JSON(http.StatusUnauthorized, r)
 			return
 		}
 
@@ -27,13 +32,23 @@ func MCheckLogin(serverKey, loginAPIPublic, userAPI string) func(ctx *ctx.Contex
 		if err != nil {
 			isp.ClearCookie(c.Writer)
 			c.Abort()
-			c.JsonErrorWithStatusCode(http.StatusUnauthorized, err)
+			r := base.Result{
+				ErrCode: 0,
+				ErrMsg:  "",
+				Data:    err.Error(),
+			}
+			c.JSON(http.StatusUnauthorized, r)
 			return
 		}
 
 		if acl.ID == "" {
 			c.Abort()
-			c.JsonErrorWithStatusCode(http.StatusUnauthorized, errors.New("未登录或token已过期！"))
+			r := base.Result{
+				ErrCode: 0,
+				ErrMsg:  "",
+				Data:    "未登录或token已过期！",
+			}
+			c.JSON(http.StatusUnauthorized, r)
 			return
 		}
 
