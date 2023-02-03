@@ -46,6 +46,6 @@ func main() {
 		UseRoutes(
 			Test1{},
 			Test2{},
-		).
+		).UseMiddleware().
 		Run(":8080")
 }

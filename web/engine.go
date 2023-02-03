@@ -16,7 +16,7 @@ type Engine struct {
 
 type Option func(ops *Options)
 
-func (service *Engine) Use(middleware ...gin.HandlerFunc) *Engine {
+func (service *Engine) use(middleware ...gin.HandlerFunc) *Engine {
 	service.Engine.Use(middleware...)
 	return service
 }
