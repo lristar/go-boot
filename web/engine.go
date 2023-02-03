@@ -16,13 +16,21 @@ type Engine struct {
 
 type Option func(ops *Options)
 
-func (service *Engine) use(middleware ...gin.HandlerFunc) *Engine {
-	service.Engine.Use(middleware...)
+func (service *Engine) use(middleware ...HandleFunc) *Engine {
+	arr := make([]gin.HandlerFunc, len(middleware))
+	for i, f := range middleware {
+		arr[i] = Handle(f)
+	}
+	service.Engine.Use(arr...)
 	return service
 }
 
-func (service *Engine) Group(relativePath string, handlers ...gin.HandlerFunc) *RouterGroup {
-	rg := service.Engine.Group(relativePath, handlers...)
+func (service *Engine) Group(relativePath string, handlers ...HandleFunc) *RouterGroup {
+	arr := make([]gin.HandlerFunc, len(handlers))
+	for i, f := range handlers {
+		arr[i] = Handle(f)
+	}
+	rg := service.Engine.Group(relativePath, arr...)
 	service.rg.RouterGroup = rg
 	return service.rg
 }

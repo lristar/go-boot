@@ -71,7 +71,7 @@ func NewApp(serverKey, serverName string, opts ...Option) *Application {
 }
 
 // UseMiddleware 注册中间件
-func (app *Application) UseMiddleware(middleware ...gin.HandlerFunc) *Application {
+func (app *Application) UseMiddleware(middleware ...HandleFunc) *Application {
 	app.Engine.use(middleware...)
 	return app
 }

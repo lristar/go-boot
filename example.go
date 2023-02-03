@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"gitlab.gf.com.cn/hk-common/go-boot/web"
 )
 
@@ -10,7 +9,7 @@ type Test1 struct {
 }
 
 func (t Test1) RegRouter(engine *web.Engine) {
-	g := engine.Group("/test1", func(context *gin.Context) {
+	g := engine.Group("/test1", func(context *web.Context) {
 		fmt.Println("before1")
 		context.Next()
 		fmt.Println("after1")
@@ -24,7 +23,7 @@ type Test2 struct {
 }
 
 func (t Test2) RegRouter(engine *web.Engine) {
-	g := engine.Group("/test2", func(context *gin.Context) {
+	g := engine.Group("/test2", func(context *web.Context) {
 		fmt.Println("before2")
 		context.Next()
 		fmt.Println("after2")
