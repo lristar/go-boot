@@ -55,6 +55,11 @@ func SentryUrl(s string) Option {
 	}
 }
 
+func Validate(vl *validator.Validate, tra ut.Translator) {
+	application.Options.vl = vl
+	application.Options.tra = tra
+}
+
 var jaegerCloser io.Closer
 
 func (o Options) init() error {

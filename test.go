@@ -6,14 +6,28 @@ import (
 	"gitlab.gf.com.cn/hk-common/go-boot/web"
 )
 
-type Test struct {
+type Test1 struct {
 }
 
-func (t Test) RegRouter(engine *web.Engine) {
-	g := engine.Group("/test", func(context *gin.Context) {
-		fmt.Println("before")
+func (t Test1) RegRouter(engine *web.Engine) {
+	g := engine.Group("/test1", func(context *gin.Context) {
+		fmt.Println("before1")
 		context.Next()
-		fmt.Println("after")
+		fmt.Println("after1")
+	})
+	g.GET("/", false, func(c *web.Context) {
+		c.JsonOK("ok")
+	})
+}
+
+type Test2 struct {
+}
+
+func (t Test2) RegRouter(engine *web.Engine) {
+	g := engine.Group("/test2", func(context *gin.Context) {
+		fmt.Println("before2")
+		context.Next()
+		fmt.Println("after2")
 	})
 	g.GET("/", true, func(c *web.Context) {
 		c.JsonOK("ok")
@@ -30,7 +44,8 @@ func main() {
 		web.UserAPI("http://10.68.41.32:8500/api"),
 	).
 		UseRoutes(
-			Test{},
+			Test1{},
+			Test2{},
 		).
 		Run(":8080")
 }

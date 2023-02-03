@@ -34,6 +34,9 @@ func NewApp(serverKey, serverName string, opts ...Option) *Application {
 	application = Application{
 		Engine: &Engine{
 			Engine: e,
+			rg: &RouterGroup{
+				&e.RouterGroup,
+			},
 		},
 		Options: &Options{
 			beforeStart: nil,

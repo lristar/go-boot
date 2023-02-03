@@ -17,13 +17,13 @@ import (
 type Context struct {
 	*gin.Context
 	User isp.LoginInfo
-	*Application
+	App  *Application
 }
 
 type HandleFunc func(c *Context)
 
 func NewContext(context *gin.Context) *Context {
-	return &Context{Context: context, Application: &application}
+	return &Context{Context: context, App: &application}
 }
 
 // Handle Context转*gin.Context
@@ -39,7 +39,10 @@ func Handle(f func(*Context)) gin.HandlerFunc {
 }
 
 func (c *Context) Validator(s interface{}) error {
-	err := c.vl.Struct(s)
+	if c.App.vl == nil {
+		return errors.New("请先注册校验器！")
+	}
+	err := c.App.vl.Struct(s)
 	sType := reflect.TypeOf(s)
 	if sType.Kind() == reflect.Ptr {
 		sType = sType.Elem()
@@ -51,7 +54,7 @@ func (c *Context) Validator(s interface{}) error {
 				ss := strings.Split(e.StructNamespace(), ".")
 				ss = ss[1:]
 				jsonKey := strings.ReplaceAll(stringx.Snake(strings.Join(ss, ".")), "._", ".")
-				result := e.Translate(c.tra)
+				result := e.Translate(c.App.tra)
 				results := strings.Split(result, " ")
 				if len(results) > 0 {
 					msg += strings.Replace(result+";", results[0], jsonKey, 1)
