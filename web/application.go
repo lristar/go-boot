@@ -55,7 +55,7 @@ func NewApp(serverKey, serverName string, opts ...Option) *Application {
 		}
 	}()
 
-	// options赋值
+	// options赋值并启动
 	for _, opt := range opts {
 		o := opt
 		co, err := o(application.Options)
