@@ -109,12 +109,6 @@ func (app *Application) Deregister(f RegistryFunc) *Application {
 
 // Run 启动应用
 func (app *Application) Run(addr ...string) {
-	defer func() {
-		if err := recover(); err != nil {
-			app.Close()
-		}
-	}()
-
 	go func(app *Application) {
 		c := make(chan os.Signal, 1)
 		signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
@@ -128,6 +122,7 @@ func (app *Application) Run(addr ...string) {
 				if app.unRegistryFunc != nil {
 					app.unRegistryFunc()
 				}
+				app.Close()
 				time.Sleep(time.Second)
 				os.Exit(0)
 				return
