@@ -9,9 +9,10 @@ import (
 )
 
 type IOption interface {
-	Start(string) error
-	io.Closer
+	Start(string) (io.Closer, error)
 }
+
+type Option func(ops *Options) (io.Closer, error)
 
 // Options for web service.
 type Options struct {
@@ -32,31 +33,43 @@ type Options struct {
 	serverName                     string
 	loginAPIPublic                 string
 	userAPI                        string
-	jaegerAddressCollectorEndpoint jaeger.JaegerConfig
-	sentryUrl                      sentry.SentryConfig
+	jaegerAddressCollectorEndpoint *jaeger.JaegerConfig
+	sentryUrl                      *sentry.SentryConfig
 }
 
 func JaegerAddressCollectorEndpoint(s string) Option {
-	return func(ops *Options) {
-		ops.jaegerAddressCollectorEndpoint = s
+	return func(ops *Options) (io.Closer, error) {
+		ops.jaegerAddressCollectorEndpoint = &jaeger.JaegerConfig{JaegerAddressCollectorEndpoint: s}
+		c, err := ops.jaegerAddressCollectorEndpoint.Start(ops.serverKey)
+		if err != nil {
+			return nil, err
+		}
+		return c, err
 	}
 }
 
 func LoginAPIPublic(s string) Option {
-	return func(ops *Options) {
+	return func(ops *Options) (io.Closer, error) {
 		ops.loginAPIPublic = s
+		return nil, nil
 	}
 }
 
 func UserAPI(s string) Option {
-	return func(ops *Options) {
+	return func(ops *Options) (io.Closer, error) {
 		ops.userAPI = s
+		return nil, nil
 	}
 }
 
 func SentryUrl(s string) Option {
-	return func(ops *Options) {
-		ops.sentryUrl = s
+	return func(ops *Options) (io.Closer, error) {
+		ops.sentryUrl = &sentry.SentryConfig{s}
+		c, err := ops.sentryUrl.Start(ops.serverKey)
+		if err != nil {
+			return nil, err
+		}
+		return c, err
 	}
 }
 
@@ -65,15 +78,10 @@ func Validate(vl *validator.Validate, tra ut.Translator) {
 	application.Options.tra = tra
 }
 
-func (o *Options) init() (io.Closer, error) {
-	jaegerCloser, err := jaeger.InitJaeger(o.serverKey, o.jaegerAddressCollectorEndpoint)
-	if err != nil {
-
-	}
-	err := sentry.InitSentry(o.sentryUrl, o.serverKey)
-	return jaegerCloser, nil
-}
-
-func (o *Options) startJaeger() {
-
-}
+//func (o *Options) init() (io.Closer, error) {
+//	jaegerCloser, err := jaeger.InitJaeger(o.serverKey, o.jaegerAddressCollectorEndpoint)
+//	if err != nil {
+//	}
+//	err := sentry.InitSentry(o.sentryUrl, o.serverKey)
+//	return jaegerCloser, nil
+//}

@@ -16,23 +16,27 @@ var (
 )
 
 type SentryConfig struct {
-	sentryUrl string
+	SentryUrl string
 }
 
-func (s *SentryConfig) Start(serverKey string) error {
+func (s *SentryConfig) Enable() bool {
+	return enabled.True()
+}
+
+func (s *SentryConfig) Start(serverKey string) (io.Closer, error) {
 	serverName = serverKey
 	// sentry 初始化
-	err := raven.SetDSN(s.sentryUrl)
+	err := raven.SetDSN(s.SentryUrl)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if err := sentry.Init(sentry.ClientOptions{
-		Dsn: s.sentryUrl,
+		Dsn: s.SentryUrl,
 	}); err != nil {
-		return fmt.Errorf("Sentry initialization failed: %w\n", err)
+		return nil, fmt.Errorf("Sentry initialization failed: %w\n", err)
 	}
 	enabled.Set(true)
-	return nil
+	return nil, nil
 }
 
 func (s *SentryConfig) Close() error {

@@ -14,8 +14,6 @@ type Engine struct {
 	rg *RouterGroup
 }
 
-type Option func(ops *Options)
-
 func (service *Engine) use(middleware ...HandleFunc) *Engine {
 	arr := make([]gin.HandlerFunc, len(middleware))
 	for i, f := range middleware {

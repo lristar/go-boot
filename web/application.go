@@ -7,7 +7,6 @@ import (
 	"io"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 	"time"
 )
@@ -58,24 +57,26 @@ func NewApp(serverKey, serverName string, opts ...Option) *Application {
 
 	// options赋值
 	for _, opt := range opts {
-		opt(application.Options)
+		o := opt
+		co, err := o(application.Options)
+		if err != nil {
+			panic(err)
+		}
+		application.AddClose(co)
 	}
-	jaegerCloser, err := application.init()
-	if err != nil {
-		panic(err)
-	}
-	application.AddClose(jaegerCloser)
 
 	// 注册基础中间件
 	e.Use(gin.Recovery(), gin.Logger(), middleware.PrintBody())
 
 	// 注册jaeger
-	if strings.Trim(application.jaegerAddressCollectorEndpoint, " ") != "" {
+	if application.jaegerAddressCollectorEndpoint.Enable() {
 		e.Use(middleware.Jaeger())
 	}
 
 	// 注册sentry
-	e.Use(middleware.MSentry(application.serverKey))
+	if application.sentryUrl.Enable() {
+		e.Use(middleware.MSentry(application.serverKey))
+	}
 	return &application
 }
 
@@ -108,6 +109,12 @@ func (app *Application) Deregister(f RegistryFunc) *Application {
 
 // Run 启动应用
 func (app *Application) Run(addr ...string) {
+	defer func() {
+		if err := recover(); err != nil {
+			app.Close()
+		}
+	}()
+
 	go func(app *Application) {
 		c := make(chan os.Signal, 1)
 		signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)

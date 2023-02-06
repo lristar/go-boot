@@ -18,7 +18,11 @@ type JaegerConfig struct {
 	JaegerAddressCollectorEndpoint string
 }
 
-func (j *JaegerConfig) Start(serverKey string) error {
+func (j *JaegerConfig) Enable() bool {
+	return enabled.True()
+}
+
+func (j *JaegerConfig) Start(serverKey string) (io.Closer, error) {
 	var tracer opentracing.Tracer
 	var err error
 	if j.JaegerAddressCollectorEndpoint != "" {
@@ -37,7 +41,7 @@ func (j *JaegerConfig) Start(serverKey string) error {
 		}).NewTracer()
 		if err != nil {
 			sentry.LogAndSentry(err)
-			return err
+			return nil, err
 		}
 		// 设置全局Tracer - 如果不设置将会导致上下文无法生成正确的Span
 		if tracer != nil {
@@ -45,7 +49,7 @@ func (j *JaegerConfig) Start(serverKey string) error {
 		}
 	}
 	enabled.Set(true)
-	return nil
+	return closer, nil
 }
 
 func (j *JaegerConfig) Close() error {
