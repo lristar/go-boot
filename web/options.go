@@ -8,10 +8,15 @@ import (
 	"io"
 )
 
+type IOption interface {
+	Start(string) error
+	io.Closer
+}
+
 // Options for web service.
 type Options struct {
-	//Auth   auth.Auth
-	//Broker broker.Broker
+	// Auth   auth.Auth
+	// Broker broker.Broker
 	// Before and After funcs
 	beforeStart []func() error
 	beforeStop  []func() error
@@ -25,10 +30,10 @@ type Options struct {
 	// can be stored in a context
 	serverKey                      string
 	serverName                     string
-	jaegerAddressCollectorEndpoint string
-	sentryUrl                      string
 	loginAPIPublic                 string
 	userAPI                        string
+	jaegerAddressCollectorEndpoint jaeger.JaegerConfig
+	sentryUrl                      sentry.SentryConfig
 }
 
 func JaegerAddressCollectorEndpoint(s string) Option {
@@ -60,10 +65,15 @@ func Validate(vl *validator.Validate, tra ut.Translator) {
 	application.Options.tra = tra
 }
 
-var jaegerCloser io.Closer
+func (o *Options) init() (io.Closer, error) {
+	jaegerCloser, err := jaeger.InitJaeger(o.serverKey, o.jaegerAddressCollectorEndpoint)
+	if err != nil {
 
-func (o Options) init() error {
-	jaegerCloser = jaeger.InitJaeger(o.serverKey, o.jaegerAddressCollectorEndpoint)
-	sentry.InitSentry(o.sentryUrl, o.serverKey)
-	return nil
+	}
+	err := sentry.InitSentry(o.sentryUrl, o.serverKey)
+	return jaegerCloser, nil
+}
+
+func (o *Options) startJaeger() {
+
 }

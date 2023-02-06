@@ -4,8 +4,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"gitlab.gf.com.cn/hk-common/go-boot/logger"
 	"gitlab.gf.com.cn/hk-common/go-boot/middleware"
+	"io"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 )
@@ -18,6 +20,7 @@ type Application struct {
 	*Engine
 	unRegistryFunc RegistryFunc
 	*Options
+	closes []io.Closer
 }
 
 type IRegistry interface {
@@ -47,21 +50,27 @@ func NewApp(serverKey, serverName string, opts ...Option) *Application {
 			serverName:  serverName,
 		},
 	}
+	defer func() {
+		if err := recover(); err != nil {
+			application.Close()
+		}
+	}()
 
 	// options赋值
 	for _, opt := range opts {
 		opt(application.Options)
 	}
-	if err := application.init(); err != nil {
+	jaegerCloser, err := application.init()
+	if err != nil {
 		panic(err)
 	}
+	application.AddClose(jaegerCloser)
 
 	// 注册基础中间件
 	e.Use(gin.Recovery(), gin.Logger(), middleware.PrintBody())
 
 	// 注册jaeger
-	if jaegerCloser != nil {
-		defer jaegerCloser.Close()
+	if strings.Trim(application.jaegerAddressCollectorEndpoint, " ") != "" {
 		e.Use(middleware.Jaeger())
 	}
 
@@ -124,5 +133,20 @@ func (app *Application) Run(addr ...string) {
 	err := app.Engine.Run(addr...)
 	if err != nil {
 		panic(err)
+	}
+}
+
+func (app *Application) AddClose(c ...io.Closer) {
+	for i := range c {
+		index := i
+		app.closes = append(app.closes, c[index])
+	}
+}
+
+func (app *Application) Close() {
+	for i := len(app.closes) - 1; i >= 0; i-- {
+		if app.closes[i] != nil {
+			app.closes[i].Close()
+		}
 	}
 }
