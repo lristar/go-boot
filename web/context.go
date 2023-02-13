@@ -18,6 +18,7 @@ type Context struct {
 	*gin.Context
 	User isp.LoginInfo
 	App  *Application
+	// 扩展配置
 }
 
 type HandleFunc func(c *Context)

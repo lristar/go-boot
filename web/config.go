@@ -8,6 +8,7 @@ import (
 // Settings Config必须大写
 type Settings struct {
 	Config Config
+	// 扩展配置
 }
 
 // Config 参数必须大写 要不然viper解析成结构体的时候不识别
