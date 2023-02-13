@@ -13,7 +13,7 @@ type RouterGroup struct {
 func (rg *RouterGroup) handle(httpMethod string, checkLogin bool, relativePath string, handlers ...HandleFunc) {
 	arr := make([]gin.HandlerFunc, 0)
 	if checkLogin {
-		arr = append(arr, middleware.MCheckLogin(application.serverKey, application.loginAPIPublic, application.userAPI))
+		arr = append(arr, middleware.MCheckLogin(application.cf.ServerKey, application.cf.LoginAPIPublic, application.cf.UserAPI))
 	}
 	for _, handler := range handlers {
 		arr = append(arr, Handle(handler))

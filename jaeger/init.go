@@ -15,7 +15,7 @@ var (
 )
 
 type JaegerConfig struct {
-	JaegerAddressCollectorEndpoint string
+	Endpoint string
 }
 
 func (j *JaegerConfig) Enable() bool {
@@ -25,7 +25,7 @@ func (j *JaegerConfig) Enable() bool {
 func (j *JaegerConfig) Start(serverKey string) (io.Closer, error) {
 	var tracer opentracing.Tracer
 	var err error
-	if j.JaegerAddressCollectorEndpoint != "" {
+	if j.Endpoint != "" {
 		tracer, closer, err = (&config.Configuration{
 			ServiceName: serverKey,
 			Disabled:    false,
@@ -36,7 +36,7 @@ func (j *JaegerConfig) Start(serverKey string) (io.Closer, error) {
 			},
 			Reporter: &config.ReporterConfig{
 				LogSpans:          true,
-				CollectorEndpoint: j.JaegerAddressCollectorEndpoint,
+				CollectorEndpoint: j.Endpoint,
 			},
 		}).NewTracer()
 		if err != nil {

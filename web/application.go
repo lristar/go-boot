@@ -1,6 +1,7 @@
 package web
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"gitlab.gf.com.cn/hk-common/go-boot/logger"
 	"gitlab.gf.com.cn/hk-common/go-boot/middleware"
@@ -11,6 +12,10 @@ import (
 	"time"
 )
 
+const (
+	DEFAULTPORT = "8080"
+)
+
 var application Application
 
 type RegistryFunc func()
@@ -19,6 +24,9 @@ type Application struct {
 	*Engine
 	unRegistryFunc RegistryFunc
 	*Options
+	// 配置文件信息
+	cf Config
+	// 关闭数据
 	closes []io.Closer
 }
 
@@ -31,7 +39,7 @@ type IUnRegistry interface {
 }
 
 // NewApp 实例化应用
-func NewApp(serverKey, serverName string, opts ...Option) *Application {
+func NewApp(cf Config, opts ...Option) *Application {
 	e := gin.New()
 	application = Application{
 		Engine: &Engine{
@@ -45,9 +53,8 @@ func NewApp(serverKey, serverName string, opts ...Option) *Application {
 			beforeStop:  nil,
 			afterStart:  nil,
 			afterStop:   nil,
-			serverKey:   serverKey,
-			serverName:  serverName,
 		},
+		cf: cf,
 	}
 	defer func() {
 		if err := recover(); err != nil {
@@ -55,7 +62,14 @@ func NewApp(serverKey, serverName string, opts ...Option) *Application {
 		}
 	}()
 
-	// options赋值并启动
+	// 注册基础中间件
+	e.Use(gin.Recovery(), gin.Logger(), middleware.PrintBody())
+	// 基础额外组件
+	if err := application.DefaultRunOptions(); err != nil {
+		panic(err)
+	}
+
+	// 启动额外组件
 	for _, opt := range opts {
 		o := opt
 		co, err := o(application.Options)
@@ -63,19 +77,6 @@ func NewApp(serverKey, serverName string, opts ...Option) *Application {
 			panic(err)
 		}
 		application.AddClose(co)
-	}
-
-	// 注册基础中间件
-	e.Use(gin.Recovery(), gin.Logger(), middleware.PrintBody())
-
-	// 注册jaeger
-	if application.jaegerAddressCollectorEndpoint.Enable() {
-		e.Use(middleware.Jaeger())
-	}
-
-	// 注册sentry
-	if application.sentryUrl.Enable() {
-		e.Use(middleware.MSentry(application.serverKey))
 	}
 	return &application
 }
@@ -108,7 +109,7 @@ func (app *Application) Deregister(f RegistryFunc) *Application {
 }
 
 // Run 启动应用
-func (app *Application) Run(addr ...string) {
+func (app *Application) Run() {
 	go func(app *Application) {
 		c := make(chan os.Signal, 1)
 		signal.Notify(c, syscall.SIGHUP, syscall.SIGQUIT, syscall.SIGTERM, syscall.SIGINT)
@@ -132,7 +133,11 @@ func (app *Application) Run(addr ...string) {
 			}
 		}
 	}(app)
-	err := app.Engine.Run(addr...)
+	port := DEFAULTPORT
+	if app.cf.Port != 0 {
+		port = fmt.Sprintf("%d", app.cf.Port)
+	}
+	err := app.Engine.Run(fmt.Sprintf(":%s", port))
 	if err != nil {
 		panic(err)
 	}
@@ -151,4 +156,26 @@ func (app *Application) Close() {
 			app.closes[i].Close()
 		}
 	}
+}
+
+func (app *Application) DefaultRunOptions() error {
+	if app.cf.Jaeger.Endpoint != "" {
+		closer1, err := app.cf.Jaeger.Start(app.cf.ServerKey)
+		if err != nil {
+			return err
+		}
+		app.AddClose(closer1)
+		// 注册Jaeger
+		app.Engine.Use(middleware.Jaeger())
+	}
+	if app.cf.Sentry.Url != "" {
+		close2, err := app.cf.Sentry.Start(app.cf.ServerKey)
+		if err != nil {
+			return err
+		}
+		app.AddClose(close2)
+		// 注册sentry
+		app.Engine.Use(middleware.MSentry(app.cf.ServerKey))
+	}
+	return nil
 }

@@ -1,8 +1,14 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"gitlab.gf.com.cn/hk-common/go-boot/web"
+	"gitlab.gf.com.cn/hk-common/go-tool/config"
+)
+
+var (
+	configName = flag.String("f", "./config/config.yaml", "配置文件位置")
 )
 
 type Test1 struct {
@@ -34,17 +40,17 @@ func (t Test2) RegRouter(engine *web.Engine) {
 }
 
 func main() {
+	var cf *web.Settings
+	var err error
+	if err = config.Setup(*configName, &cf, config.ResetTag("yaml")); err != nil {
+		panic(err)
+	}
 	web.NewApp(
-		"test",
-		"测试",
-		web.SentryUrl("http://964d306156fe45ddad42b725ade8d247:e79757b5d2f94d839439d440b7096399@10.68.41.33:9000/2"),
-		web.JaegerAddressCollectorEndpoint("http://10.68.41.33:8998/api/traces"),
-		web.LoginAPIPublic("http://10.68.41.36:9000"),
-		web.UserAPI("http://10.68.41.32:8500/api"),
+		cf.Config,
 	).
 		UseRoutes(
 			Test1{},
 			Test2{},
 		).UseMiddleware().
-		Run(":8080")
+		Run()
 }
