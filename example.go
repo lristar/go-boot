@@ -8,8 +8,13 @@ import (
 )
 
 var (
-	configName = flag.String("f", "./config/config.yaml", "配置文件位置")
+	configName *string
 )
+
+func init() {
+	configName = flag.String("f", "./config/config.yaml", "配置文件位置")
+	flag.Parse()
+}
 
 type Test1 struct {
 }
