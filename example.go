@@ -40,13 +40,13 @@ func (t Test2) RegRouter(engine *web.Engine) {
 }
 
 func main() {
-	var cf *web.Settings
+	var cf *web.Config
 	var err error
-	if err = config.Setup(*configName, &cf, config.ResetTag("yaml")); err != nil {
+	if err = config.Setup(*configName, &cf, config.ResetTag("json")); err != nil {
 		panic(err)
 	}
 	web.NewApp(
-		cf.Config,
+		*cf,
 	).
 		UseRoutes(
 			Test1{},

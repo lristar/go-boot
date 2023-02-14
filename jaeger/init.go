@@ -15,7 +15,7 @@ var (
 )
 
 type JaegerConfig struct {
-	Endpoint string
+	Endpoint string `json:"endpoint"`
 }
 
 func (j *JaegerConfig) Enable() bool {

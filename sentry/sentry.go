@@ -16,7 +16,7 @@ var (
 )
 
 type SentryConfig struct {
-	Url string
+	Url string `json:"url"`
 }
 
 func (s *SentryConfig) Enable() bool {
