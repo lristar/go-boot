@@ -8,11 +8,12 @@ import (
 )
 
 var (
-	configName *string
+	defaultConfigPath *string
+	_cf               *web.Config
 )
 
 func init() {
-	configName = flag.String("f", "./config/config.yaml", "配置文件位置")
+	defaultConfigPath = flag.String("f", "./config/", "配置文件位置")
 	flag.Parse()
 }
 
@@ -26,7 +27,7 @@ func (t Test1) RegRouter(engine *web.Engine) {
 		fmt.Println("after1")
 	})
 	g.GET("/", false, func(c *web.Context) {
-		c.JsonOK("ok")
+		c.JsonOK(_cf.ServerName)
 	})
 }
 
@@ -45,13 +46,13 @@ func (t Test2) RegRouter(engine *web.Engine) {
 }
 
 func main() {
-	var cf *web.Config
+	_cf = new(web.Config)
 	var err error
-	if err = config.Setup(*configName, &cf, config.ResetTag("json")); err != nil {
+	if err = config.Setup(*defaultConfigPath, _cf, config.ResetTag("json"), config.OpenWatch()); err != nil {
 		panic(err)
 	}
 	web.NewApp(
-		*cf,
+		_cf.Get(),
 	).
 		UseRoutes(
 			Test1{},
