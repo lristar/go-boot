@@ -48,7 +48,7 @@ func (t Test2) RegRouter(engine *web.Engine) {
 func main() {
 	_cf = new(web.Config)
 	var err error
-	if err = config.Setup(*defaultConfigPath, _cf, config.ResetTag("json"), config.OpenWatch()); err != nil {
+	if err = config.Setup(*defaultConfigPath, _cf, config.ResetTag("json")); err != nil {
 		panic(err)
 	}
 	web.NewApp(
