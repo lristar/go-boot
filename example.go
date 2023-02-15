@@ -27,7 +27,7 @@ func (t Test1) RegRouter(engine *web.Engine) {
 		fmt.Println("after1")
 	})
 	g.GET("/", false, func(c *web.Context) {
-		c.JsonOK(_cf.ServerName)
+		c.JsonOK(_cf.Get().ServerName)
 	})
 }
 
