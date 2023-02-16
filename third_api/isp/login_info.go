@@ -1,4 +1,4 @@
-package isp
+package lsp
 
 import (
 	"encoding/json"

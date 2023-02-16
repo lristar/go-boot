@@ -11,7 +11,7 @@ require (
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/sirupsen/logrus v1.9.0
 	github.com/uber/jaeger-client-go v2.30.0+incompatible
-	gitlab.gf.com.cn/hk-common/go-tool v0.0.8
+	gitlab.gf.com.cn/hk-common/go-tool v0.0.11
 	golang.org/x/exp v0.0.0-20230203172020-98cc5a0785f9
 	moul.io/http2curl v1.0.0
 )

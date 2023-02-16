@@ -3,7 +3,7 @@ package middleware
 import (
 	"github.com/gin-gonic/gin"
 	"gitlab.gf.com.cn/hk-common/go-boot/dto/base"
-	"gitlab.gf.com.cn/hk-common/go-boot/isp"
+	isp "gitlab.gf.com.cn/hk-common/go-boot/third_api/isp"
 	"net/http"
 )
 
@@ -27,7 +27,6 @@ func MCheckLogin(serverKey, loginAPIPublic, userAPI string) func(ctx *gin.Contex
 			c.JSON(http.StatusUnauthorized, r)
 			return
 		}
-
 		acl, err := isp.GetUserinfo(token, serverKey, loginAPIPublic, userAPI)
 		if err != nil {
 			isp.ClearCookie(c.Writer)

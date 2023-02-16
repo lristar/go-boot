@@ -7,3 +7,13 @@ sentry:
   url: http://964d306156fe45ddad42b725ade8d247:e79757b5d2f94d839439d440b7096399@10.68.41.33:9000/2
 jaeger:
   endpoint: http://10.68.41.33:8998/api/traces
+redis:
+  host: 10.68.41.32:24377,10.68.41.33:24377,10.68.41.36:24377
+  master: mymaster
+  mpassword: gfhs123456
+  spassword: gfhs123456
+  group: go-boot-example
+  readtimeout: 15
+  write_timeout: 15
+  db: 0
+  poolsize: 10

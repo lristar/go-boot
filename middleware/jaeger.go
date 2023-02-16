@@ -8,7 +8,7 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	tracerLog "github.com/opentracing/opentracing-go/log"
-	"gitlab.gf.com.cn/hk-common/go-boot/isp"
+	isp "gitlab.gf.com.cn/hk-common/go-boot/third_api/isp"
 	"io/ioutil"
 	"net/http"
 	"strings"

@@ -11,7 +11,7 @@ import (
 	"github.com/opentracing/opentracing-go"
 	tracerLog "github.com/opentracing/opentracing-go/log"
 	"gitlab.gf.com.cn/hk-common/go-boot/lib/stringx"
-	"gitlab.gf.com.cn/hk-common/go-boot/sentry"
+	"gitlab.gf.com.cn/hk-common/go-boot/pkg/sentry"
 	"io"
 	"io/ioutil"
 	"moul.io/http2curl"

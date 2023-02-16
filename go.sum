@@ -254,6 +254,8 @@ gitlab.gf.com.cn/hk-common/go-tool v0.0.7 h1:YMIHE64P+/qN1rArwXdADwNWihh78NgCHgU
 gitlab.gf.com.cn/hk-common/go-tool v0.0.7/go.mod h1:+yhSgq+n9dVYGi3l1Cl6EpJKZSAQAAMae50d/SJPk/Q=
 gitlab.gf.com.cn/hk-common/go-tool v0.0.8 h1:Cy0YrYH7keodHKxJOHwpWjpTSzPnphce7us+aLcee04=
 gitlab.gf.com.cn/hk-common/go-tool v0.0.8/go.mod h1:+yhSgq+n9dVYGi3l1Cl6EpJKZSAQAAMae50d/SJPk/Q=
+gitlab.gf.com.cn/hk-common/go-tool v0.0.11 h1:lT0qXYUA8bE/WytGmMHPLJ6CrB4f1S43EFq/nkJpucI=
+gitlab.gf.com.cn/hk-common/go-tool v0.0.11/go.mod h1:sMo9Gm9JTsLFIfQvaugkOsa9YtbTCOEn44SVmt4qato=
 go.opencensus.io v0.21.0/go.mod h1:mSImk1erAIZhrmZN+AvHh14ztQfjbGwt4TtuofqLduU=
 go.opencensus.io v0.22.0/go.mod h1:+kGneAE2xo2IficOXnaByMWTGM9T73dGwxeWcUqIpI8=
 go.opencensus.io v0.22.2/go.mod h1:yxeiOL68Rb0Xd1ddK5vPZ/oVn4vY4Ynel7k9FzqtOIw=
