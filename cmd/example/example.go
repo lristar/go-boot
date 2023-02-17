@@ -6,6 +6,7 @@ import (
 	"gitlab.gf.com.cn/hk-common/go-boot/pkg/mongo"
 	"gitlab.gf.com.cn/hk-common/go-boot/pkg/pg"
 	"gitlab.gf.com.cn/hk-common/go-boot/pkg/redis"
+	"gitlab.gf.com.cn/hk-common/go-boot/pkg/validator"
 	"gitlab.gf.com.cn/hk-common/go-boot/web"
 	"gitlab.gf.com.cn/hk-common/go-tool/config"
 )
@@ -28,6 +29,8 @@ func main() {
 	}
 	web.NewApp(
 		_cf.Get().Config,
+		// 校验器和翻译器的创建
+		validator.InitValidate(),
 		// 开启redis连接
 		redis.InitRedis(_cf.Redis),
 		// 开启pg连接
