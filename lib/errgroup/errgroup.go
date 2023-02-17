@@ -9,7 +9,7 @@ package errgroup
 import (
 	"context"
 	"fmt"
-	"gitlab.gf.com.cn/hk-common/go-boot/logger"
+	"gitlab.gf.com.cn/hk-common/go-boot/pkg/logger"
 	"sync"
 )
 

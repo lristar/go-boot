@@ -3,8 +3,8 @@ package lsp
 import (
 	"encoding/json"
 	"github.com/gin-gonic/gin"
-	"gitlab.gf.com.cn/hk-common/go-boot/http_client"
-	"gitlab.gf.com.cn/hk-common/go-boot/logger"
+	"gitlab.gf.com.cn/hk-common/go-boot/lib/http_client"
+	"gitlab.gf.com.cn/hk-common/go-boot/pkg/logger"
 	"net/http"
 )
 

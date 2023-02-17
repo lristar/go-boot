@@ -3,6 +3,8 @@ package example
 import (
 	"fmt"
 	"gitlab.gf.com.cn/hk-common/go-boot/web"
+	mg "gitlab.gf.com.cn/hk-common/go-tool/server/mongo"
+	pg "gitlab.gf.com.cn/hk-common/go-tool/server/pg"
 	redis "gitlab.gf.com.cn/hk-common/go-tool/server/redis"
 	"sync"
 )
@@ -13,8 +15,10 @@ var (
 
 // Settings Config必须大写
 type Settings struct {
-	web.Config
-	Redis redis.RedisConfig `json:"redis"`
+	Config web.Config        `json:"config"`
+	Redis  redis.RedisConfig `json:"redis"`
+	Pg     pg.Config         `json:"pg"`
+	Mg     mg.Config         `json:"mg"`
 	// 扩展配置
 }
 

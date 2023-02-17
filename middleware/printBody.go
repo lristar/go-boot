@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	myerror "gitlab.gf.com.cn/hk-common/go-boot/lib/error"
-	"gitlab.gf.com.cn/hk-common/go-boot/logger"
+	"gitlab.gf.com.cn/hk-common/go-boot/pkg/logger"
 	"gitlab.gf.com.cn/hk-common/go-boot/pkg/sentry"
 	"io"
 	"net/http"

@@ -3,7 +3,7 @@ package stringx
 import (
 	"encoding/json"
 	"fmt"
-	"gitlab.gf.com.cn/hk-common/go-boot/logger"
+	"gitlab.gf.com.cn/hk-common/go-boot/pkg/logger"
 	"strconv"
 	"strings"
 )

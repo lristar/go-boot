@@ -5,7 +5,7 @@ import (
 	"github.com/getsentry/raven-go"
 	"github.com/getsentry/sentry-go"
 	"gitlab.gf.com.cn/hk-common/go-boot/lib/atomic"
-	"gitlab.gf.com.cn/hk-common/go-boot/logger"
+	"gitlab.gf.com.cn/hk-common/go-boot/pkg/logger"
 	"io"
 )
 

@@ -3,6 +3,8 @@ package main
 import (
 	"flag"
 	"gitlab.gf.com.cn/hk-common/go-boot/api/example"
+	"gitlab.gf.com.cn/hk-common/go-boot/pkg/mongo"
+	"gitlab.gf.com.cn/hk-common/go-boot/pkg/pg"
 	"gitlab.gf.com.cn/hk-common/go-boot/pkg/redis"
 	"gitlab.gf.com.cn/hk-common/go-boot/web"
 	"gitlab.gf.com.cn/hk-common/go-tool/config"
@@ -14,7 +16,7 @@ var (
 )
 
 func init() {
-	defaultConfigPath = flag.String("f", "./config/", "配置文件位置")
+	defaultConfigPath = flag.String("f", "./cmd/example", "配置文件位置")
 	flag.Parse()
 }
 
@@ -26,7 +28,12 @@ func main() {
 	}
 	web.NewApp(
 		_cf.Get().Config,
+		// 开启redis连接
 		redis.InitRedis(_cf.Redis),
+		// 开启pg连接
+		pg.InitPg(_cf.Pg, true),
+		// 开启mongodb连接
+		mongo.InitMg(_cf.Mg),
 	).
 		UseRoutes(
 			example.Routers...,

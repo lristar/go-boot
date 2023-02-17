@@ -10,5 +10,10 @@ func Hello(c *web.Context) {
 	if err := cli.Set(c, "hahah", "test111", 0).Err(); err != nil {
 		c.JsonError(err)
 	}
-	c.JsonOK("ok")
+	rs, err := cli.Get(c, "hahah").Result()
+	if err != nil {
+		c.JsonError(err)
+	}
+
+	c.JsonOK(rs)
 }
