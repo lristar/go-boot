@@ -51,7 +51,7 @@ require (
 	github.com/subosito/gotenv v1.4.2 // indirect
 	github.com/uber/jaeger-lib v2.4.1+incompatible // indirect
 	github.com/ugorji/go/codec v1.2.7 // indirect
-	gitlab.gf.com.cn/hk-common/validator v0.0.1 // indirect
+	gitlab.gf.com.cn/hk-common/validator v0.0.2 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	golang.org/x/crypto v0.5.0 // indirect
 	golang.org/x/net v0.5.0 // indirect

@@ -289,6 +289,8 @@ gitlab.gf.com.cn/hk-common/go-tool v0.0.15 h1:79ia8jirq425EsJzdJZY88udXo9b7Chuax
 gitlab.gf.com.cn/hk-common/go-tool v0.0.15/go.mod h1:ogCAUqkNHMQfFAQrsZ+l2L0fdRkiZNcnBtny/Ro41gE=
 gitlab.gf.com.cn/hk-common/validator v0.0.1 h1:OiSqX40Jses+DUeCwAIUspdZ66zOWeTATChA8QRQ1Oc=
 gitlab.gf.com.cn/hk-common/validator v0.0.1/go.mod h1:/0VbItlJJT326581ImF+D2+k0UQbJ08DLK0bLVGb0Kg=
+gitlab.gf.com.cn/hk-common/validator v0.0.2 h1:rv/4Y2z77HZHzZztEc4S9wpJokHMeZg8UjHdcgbSMQk=
+gitlab.gf.com.cn/hk-common/validator v0.0.2/go.mod h1:/0VbItlJJT326581ImF+D2+k0UQbJ08DLK0bLVGb0Kg=
 go.opencensus.io v0.21.0/go.mod h1:mSImk1erAIZhrmZN+AvHh14ztQfjbGwt4TtuofqLduU=
 go.opencensus.io v0.22.0/go.mod h1:+kGneAE2xo2IficOXnaByMWTGM9T73dGwxeWcUqIpI8=
 go.opencensus.io v0.22.2/go.mod h1:yxeiOL68Rb0Xd1ddK5vPZ/oVn4vY4Ynel7k9FzqtOIw=
