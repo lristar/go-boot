@@ -14,5 +14,6 @@ func (t Test1) RegRouter(engine *web.Engine) {
 		context.Next()
 		fmt.Println("after1")
 	})
-	g.GET("/", false, Hello)
+	g.GET("/", false, getRedis)
+	g.POST("/hello", false, Hello)
 }
