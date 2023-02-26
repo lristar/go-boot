@@ -1,9 +1,9 @@
 package example
 
 import (
-	"gitlab.gf.com.cn/hk-common/go-boot/api/example/service/batch"
-	"gitlab.gf.com.cn/hk-common/go-boot/api/example/service/user"
-	"gitlab.gf.com.cn/hk-common/go-boot/web"
+	"github.com/lristar/go-boot/api/example/service/batch"
+	"github.com/lristar/go-boot/api/example/service/user"
+	"github.com/lristar/go-boot/web"
 )
 
 var Routers = []web.IRegRouter{

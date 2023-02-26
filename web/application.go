@@ -3,8 +3,8 @@ package web
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"gitlab.gf.com.cn/hk-common/go-boot/middleware"
-	"gitlab.gf.com.cn/hk-common/go-boot/pkg/logger"
+	"github.com/lristar/go-boot/middleware"
+	"github.com/lristar/go-boot/pkg/logger"
 	"io"
 	"os"
 	"os/signal"

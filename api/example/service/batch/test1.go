@@ -1,9 +1,9 @@
 package batch
 
 import (
-	"gitlab.gf.com.cn/hk-common/go-boot/web"
-	myredis "gitlab.gf.com.cn/hk-common/go-tool/server/redis"
-	"gitlab.gf.com.cn/hk-common/validator/validator"
+	"github.com/lristar/go-boot/web"
+	myredis "github.com/lristar/go-tool/server/redis"
+	"github.com/lristar/go-validator/validator"
 )
 
 func getRedis(c *web.Context) {

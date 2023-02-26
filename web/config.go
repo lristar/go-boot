@@ -1,8 +1,8 @@
 package web
 
 import (
-	"gitlab.gf.com.cn/hk-common/go-boot/pkg/jaeger"
-	"gitlab.gf.com.cn/hk-common/go-boot/pkg/sentry"
+	"github.com/lristar/go-boot/pkg/jaeger"
+	"github.com/lristar/go-boot/pkg/sentry"
 )
 
 // Config 参数必须大写 要不然viper解析成结构体的时候不识别

@@ -1,8 +1,8 @@
 package redis
 
 import (
-	"gitlab.gf.com.cn/hk-common/go-boot/web"
-	redis "gitlab.gf.com.cn/hk-common/go-tool/server/redis"
+	"github.com/lristar/go-boot/web"
+	redis "github.com/lristar/go-tool/server/redis"
 	"io"
 )
 

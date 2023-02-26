@@ -1,8 +1,8 @@
 package mongo
 
 import (
-	"gitlab.gf.com.cn/hk-common/go-boot/web"
-	mg "gitlab.gf.com.cn/hk-common/go-tool/server/mongo"
+	"github.com/lristar/go-boot/web"
+	mg "github.com/lristar/go-tool/server/mongo"
 	"io"
 )
 

@@ -58,19 +58,26 @@ func (t Test2) RegRouter(engine *web.Engine) {
 }
 
 func main() {
+	_cf = new(example.Settings)
+	var err error
+	if err = config.Setup(*defaultConfigPath, _cf, config.ResetTag("json")); err != nil {
+		panic(err)
+	}
 	web.NewApp(
-		"test",
-		"测试",
-		web.SentryUrl("http://964d306156fe45ddad42b725ade8d247:e79757b5d2f94d839439d440b7096399@10.68.41.33:9000/2"),
-		web.JaegerAddressCollectorEndpoint("http://10.68.41.33:8998/api/traces"),
-		web.LoginAPIPublic("http://10.68.41.36:9000"),
-		web.UserAPI("http://10.68.41.32:8500/api"),
+		_cf.Get().Config,
+		// 校验器和翻译器的创建
+		validator.InitValidate(),
+		//// 开启redis连接
+		//redis.InitRedis(_cf.Redis),
+		//// 开启pg连接
+		//pg.InitPg(_cf.Pg, true),
+		//// 开启mongodb连接
+		//mongo.InitMg(_cf.Mg),
 	).
 		UseRoutes(
-			Test1{},
-			Test2{},
+			example.Routers...,
 		).UseMiddleware().
-		Run(":8080")
+		Run()
 }
 
 

@@ -2,8 +2,8 @@ package validator
 
 import (
 	"github.com/go-playground/validator/v10"
-	"gitlab.gf.com.cn/hk-common/go-boot/web"
-	val "gitlab.gf.com.cn/hk-common/validator/validator"
+	"github.com/lristar/go-boot/web"
+	val "github.com/lristar/go-validator/validator"
 	"io"
 )
 

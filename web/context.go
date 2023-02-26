@@ -1,16 +1,11 @@
 package web
 
 import (
-	"errors"
 	"github.com/gin-gonic/gin"
-	"github.com/go-playground/validator/v10"
-	"gitlab.gf.com.cn/hk-common/go-boot/dto/base"
-	myerror "gitlab.gf.com.cn/hk-common/go-boot/lib/error"
-	"gitlab.gf.com.cn/hk-common/go-boot/lib/stringx"
-	isp "gitlab.gf.com.cn/hk-common/go-boot/third_api/isp"
+	"github.com/lristar/go-boot/dto/base"
+	myerror "github.com/lristar/go-boot/lib/error"
+	isp "github.com/lristar/go-boot/third_api/isp"
 	"net/http"
-	"reflect"
-	"strings"
 )
 
 // Context 自定义上下文
@@ -37,36 +32,6 @@ func Handle(f func(*Context)) gin.HandlerFunc {
 		}
 		f(context)
 	}
-}
-
-func (c *Context) Validator(s interface{}) error {
-	if c.App.vl == nil {
-		return errors.New("请先注册校验器！")
-	}
-	err := c.App.vl.Struct(s)
-	sType := reflect.TypeOf(s)
-	if sType.Kind() == reflect.Ptr {
-		sType = sType.Elem()
-	}
-	if err != nil {
-		msg := ""
-		if rErr, ok := err.(validator.ValidationErrors); ok {
-			for _, e := range rErr {
-				ss := strings.Split(e.StructNamespace(), ".")
-				ss = ss[1:]
-				jsonKey := strings.ReplaceAll(stringx.Snake(strings.Join(ss, ".")), "._", ".")
-				result := e.Translate(c.App.tra)
-				results := strings.Split(result, " ")
-				if len(results) > 0 {
-					msg += strings.Replace(result+";", results[0], jsonKey, 1)
-				} else {
-					msg += result + ";"
-				}
-			}
-		}
-		return errors.New(msg)
-	}
-	return nil
 }
 
 func (c *Context) JsonOK(res interface{}) {

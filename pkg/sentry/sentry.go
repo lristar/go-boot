@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"github.com/getsentry/raven-go"
 	"github.com/getsentry/sentry-go"
-	"gitlab.gf.com.cn/hk-common/go-boot/lib/atomic"
-	"gitlab.gf.com.cn/hk-common/go-boot/pkg/logger"
+	"github.com/lristar/go-boot/lib/atomic"
+	"github.com/lristar/go-boot/pkg/logger"
 	"io"
 )
 

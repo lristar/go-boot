@@ -2,7 +2,7 @@ package web
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.gf.com.cn/hk-common/go-boot/middleware"
+	"github.com/lristar/go-boot/middleware"
 	"net/http"
 )
 

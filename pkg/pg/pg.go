@@ -1,8 +1,8 @@
 package pg
 
 import (
-	"gitlab.gf.com.cn/hk-common/go-boot/web"
-	pg "gitlab.gf.com.cn/hk-common/go-tool/server/pg"
+	"github.com/lristar/go-boot/web"
+	pg "github.com/lristar/go-tool/server/pg"
 	"io"
 )
 

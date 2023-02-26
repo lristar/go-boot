@@ -1,11 +1,11 @@
 package jaeger
 
 import (
+	"github.com/lristar/go-boot/lib/atomic"
+	"github.com/lristar/go-boot/pkg/sentry"
 	"github.com/opentracing/opentracing-go"
 	"github.com/uber/jaeger-client-go"
 	"github.com/uber/jaeger-client-go/config"
-	"gitlab.gf.com.cn/hk-common/go-boot/lib/atomic"
-	"gitlab.gf.com.cn/hk-common/go-boot/pkg/sentry"
 	"io"
 )
 

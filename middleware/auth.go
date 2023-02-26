@@ -2,8 +2,8 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"gitlab.gf.com.cn/hk-common/go-boot/dto/base"
-	isp "gitlab.gf.com.cn/hk-common/go-boot/third_api/isp"
+	"github.com/lristar/go-boot/dto/base"
+	isp "github.com/lristar/go-boot/third_api/isp"
 	"net/http"
 )
 

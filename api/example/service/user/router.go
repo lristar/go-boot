@@ -2,7 +2,7 @@ package user
 
 import (
 	"fmt"
-	"gitlab.gf.com.cn/hk-common/go-boot/web"
+	"github.com/lristar/go-boot/web"
 )
 
 type Test2 struct {

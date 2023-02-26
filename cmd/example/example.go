@@ -2,10 +2,10 @@ package main
 
 import (
 	"flag"
-	"gitlab.gf.com.cn/hk-common/go-boot/api/example"
-	"gitlab.gf.com.cn/hk-common/go-boot/pkg/validator"
-	"gitlab.gf.com.cn/hk-common/go-boot/web"
-	"gitlab.gf.com.cn/hk-common/go-tool/config"
+	"github.com/lristar/go-boot/api/example"
+	"github.com/lristar/go-boot/pkg/validator"
+	"github.com/lristar/go-boot/web"
+	"github.com/lristar/go-tool/config"
 )
 
 var (
