@@ -2,33 +2,33 @@ config:
   server_key: test
   server_name: 测试
   port: 8888
-  login_api_public: http://10.68.41.36:9000
-  user_api: http://10.68.41.32:8500/api
+  login_api_public: http://10.17.41.99:9000
+  user_api: http://10.17.41.99:8500/api
   sentry:
-    url: http://964d306156fe45ddad42b725ade8d247:e79757b5d2f94d839439d440b7096399@10.68.41.33:9000/2
+    url: http://964d306156fe45ddad42b725ade8d247:e79757b5d2f94d839439d440b7096399@10.17.41.33:9000/2
   jaeger:
-    endpoint: http://10.68.41.33:8998/api/traces
+    endpoint: http://10.17.41.33:9001/api/traces
 redis:
-  host: 10.68.41.32:24377,10.68.41.33:24377,10.68.41.36:24377
+  host: 10.17.41.32:24377,10.17.41.33:24377,10.17.41.36:24377
   master: mymaster
-  mpassword: gfhs123456
-  spassword: gfhs123456
+  mpassword: asdfg
+  spassword: asdfg
   group: go-boot-example
   readtimeout: 15
   write_timeout: 15
   db: 0
   poolsize: 10
 pg:
-  host: 10.68.41.35
+  host: 10.17.41.35
   port: 5432
-  uname: gfhkzt
-  dbname: gfhkzt
-  pwd: gfhk@2021
+  uname: aaaaa
+  dbname: test
+  pwd: test
   max_idle_conn: 10
   max_open_conn: 10
 mg:
-  host: 10.68.41.35:8019,10.68.41.36:8017,10.68.41.37:8019
-  dbname: gfhkmot
-  rsname: mot
-  uname: gfhk
+  host: 10.17.41.35:8019,10.17.41.36:8017,10.17.41.37:8019
+  dbname: test
+  rsname: test
+  uname: test
   pwd: 123456
