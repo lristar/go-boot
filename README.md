@@ -5,7 +5,7 @@
 With [Go module] support, simply add the following import
 
 ```
-import "gitlab.gf.com.cn/hk-common/go-boot"
+import "github.com/lristar/go-boot"
 ```
 
 to your code, and then `go [build|run|test]` will automatically fetch the necessary dependencies.
@@ -13,7 +13,7 @@ to your code, and then `go [build|run|test]` will automatically fetch the necess
 Otherwise, run the following Go command to install the `go-boot` package:
 
 ```sh
-$ go get -u gitlab.gf.com.cn/hk-common/go-boot
+$ go get -u github.com/lristar/go-boot
 ```
 
 ### Running go-boot
@@ -24,8 +24,11 @@ First you need to import Gin package for using go-boot, one simplest example lik
 package main
 
 import (
-	"fmt"
-	"gitlab.gf.com.cn/hk-common/go-boot/web"
+	"flag"
+	"github.com/lristar/go-boot/api/example"
+	"github.com/lristar/go-boot/pkg/validator"
+	"github.com/lristar/go-boot/web"
+	"github.com/lristar/go-tool/config"
 )
 
 type Test1 struct {
