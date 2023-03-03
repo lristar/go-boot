@@ -5,7 +5,7 @@ import (
 	"github.com/lristar/go-boot/api/example"
 	"github.com/lristar/go-boot/pkg/validator"
 	"github.com/lristar/go-boot/web"
-	"github.com/lristar/go-tool/config"
+	config "github.com/lristar/go-tool/config"
 )
 
 var (
@@ -25,7 +25,7 @@ func main() {
 		panic(err)
 	}
 	web.NewApp(
-		_cf.Get().Config,
+		_cf,
 		// 校验器和翻译器的创建
 		validator.InitValidate(),
 		//// 开启redis连接

@@ -6,9 +6,8 @@ require (
 	github.com/getsentry/raven-go v0.2.0
 	github.com/getsentry/sentry-go v0.18.0
 	github.com/gin-gonic/gin v1.9.0
-	github.com/go-playground/universal-translator v0.18.1
 	github.com/go-playground/validator/v10 v10.11.2
-	github.com/lristar/go-tool v0.0.1
+	github.com/lristar/go-tool v0.2.0-beta
 	github.com/lristar/go-validator v0.0.1
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/sirupsen/logrus v1.9.0
@@ -27,6 +26,7 @@ require (
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
+	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/goccy/go-json v0.10.0 // indirect
 	github.com/gopherjs/gopherjs v1.17.2 // indirect

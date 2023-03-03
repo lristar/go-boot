@@ -39,7 +39,7 @@ type IUnRegistry interface {
 }
 
 // NewApp 实例化应用
-func NewApp(cf Config, opts ...Option) *Application {
+func NewApp(cfg IConfigBasic, opts ...Option) *Application {
 	e := gin.New()
 	application = Application{
 		Engine: &Engine{
@@ -54,7 +54,7 @@ func NewApp(cf Config, opts ...Option) *Application {
 			afterStart:  nil,
 			afterStop:   nil,
 		},
-		cf: cf,
+		cf: cfg.GetBasicConfig(),
 	}
 	defer func() {
 		if err := recover(); err != nil {
