@@ -14,7 +14,7 @@ var (
 )
 
 func init() {
-	defaultConfigPath = flag.String("f", "./cmd/example", "配置文件位置")
+	defaultConfigPath = flag.String("f", ".", "配置文件位置")
 	flag.Parse()
 }
 
