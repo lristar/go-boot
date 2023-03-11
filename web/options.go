@@ -1,8 +1,6 @@
 package web
 
 import (
-	ut "github.com/go-playground/universal-translator"
-	"github.com/go-playground/validator/v10"
 	"io"
 )
 
@@ -18,14 +16,6 @@ type Options struct {
 	beforeStop  []func() error
 	afterStart  []func() error
 	afterStop   []func() error
-	//  校验器
-	vl  *validator.Validate
-	tra ut.Translator
-}
-
-func Validate(vl *validator.Validate, tra ut.Translator) {
-	application.Options.vl = vl
-	application.Options.tra = tra
 }
 
 //func (o *Options) init() (io.Closer, error) {

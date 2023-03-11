@@ -15,10 +15,10 @@ var (
 
 // Settings Config必须大写
 type Settings struct {
-	Config web.Config        `json:"config"`
-	Redis  redis.RedisConfig `json:"redis"`
-	Pg     pg.Config         `json:"pg"`
-	Mg     mg.Config         `json:"mg"`
+	web.Config
+	Redis redis.RedisConfig `json:"redis"`
+	Pg    pg.Config         `json:"pg"`
+	Mg    mg.Config         `json:"mg"`
 	// 扩展配置
 }
 
